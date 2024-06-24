@@ -1,0 +1,53 @@
+create table Employee(
+SSN int primary key,
+Name varchar(20),
+Address varchar(20),
+Sex varchar(10),
+Salary int,
+Super_SSN int references Employee(SSN) on delete cascade
+);
+ 
+desc Employee;
+desc Department;
+desc  Dlocation;
+desc  Project;
+desc Works_On;
+
+
+select * from Employee;
+select * from Department;
+select * from  Dlocation;
+select * from  Project;
+select * from  Works_On;
+
+select p.pno
+from employee e, department d, project p
+where p.dno=d.dno and d.manager_ssn=e.ssn and e.name='Scott'
+union
+select w.pno
+from employee e, works_on w
+where e.ssn=w.ssn and e.name='Scott';
+
+select name, 1.1* salary as raised_salary
+from employee e, project p, works_on w
+where p.pname='IOT' and p.pno=w.pno and w.ssn=e.ssn;
+
+select e.dno, count(*) as Employee_count
+from employee e, department d
+where e.dno=d.dno and salary> 600000 and e.dno in ( select dno
+ from employee
+ group by dno
+ having count(*)>5)
+group by e.dno ;
+ 
+desc flight;
+desc aircraft;
+desc employees;
+desc certified;
+ 
+select * from  flight ;
+select * from aircraft;
+select * from employees;
+select * from certified;
+
+
